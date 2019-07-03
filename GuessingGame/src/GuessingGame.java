@@ -1,9 +1,12 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GuessingGame extends JFrame
 {
@@ -14,6 +17,20 @@ public class GuessingGame extends JFrame
 	public void checkGuess()
 	{
 		String guessText = txtGuess.getText();
+		String message = "";
+		int guess = Integer.parseInt(guessText);
+		if (guess < theNumber)
+			message = guess + " is too low. Try again.";
+		else if (guess > theNumber)
+			message = guess + " is too high. Try again.";
+		else
+			message = guess + " is correct. You win!";
+		lblOutput.setText(message);
+	}
+	
+	public void newGame()
+	{
+		this.theNumber = (int)(Math.random() * 100 + 1);
 	}
 	
 	public GuessingGame() 
@@ -43,6 +60,11 @@ public class GuessingGame extends JFrame
 		txtGuess.setColumns(10);
 		
 		JButton btnGuess = new JButton("Guess!");
+		btnGuess.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				checkGuess();
+			}
+		});
 		btnGuess.setFont(new Font("Calibri", Font.BOLD, 16));
 		btnGuess.setBounds(167, 146, 97, 25);
 		getContentPane().add(btnGuess);
@@ -56,7 +78,9 @@ public class GuessingGame extends JFrame
 
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
-
+		GuessingGame theGame = new GuessingGame();
+		theGame.newGame();
+		theGame.setSize(new Dimension(450,300));
+		theGame.setVisible(true);
 	}
 }
