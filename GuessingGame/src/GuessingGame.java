@@ -20,12 +20,21 @@ public class GuessingGame extends JFrame
 		String message = "";
 		int guess = Integer.parseInt(guessText);
 		if (guess < theNumber)
+		{
 			message = guess + " is too low. Try again.";
+		}
 		else if (guess > theNumber)
+		{
 			message = guess + " is too high. Try again.";
+		}
 		else
-			message = guess + " is correct. You win!";
+		{
+			message = guess + " is correct. You win! Let's play again!";
+			newGame();
+		}
 		lblOutput.setText(message);
+		txtGuess.requestFocus();
+		txtGuess.selectAll();
 	}
 	
 	public void newGame()
@@ -52,6 +61,11 @@ public class GuessingGame extends JFrame
 		getContentPane().add(lblPrompt);
 		
 		txtGuess = new JTextField();
+		txtGuess.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				checkGuess();
+			}
+		});
 		txtGuess.setFont(new Font("Calibri", Font.PLAIN, 16));
 		txtGuess.setText("100");
 		txtGuess.setHorizontalAlignment(SwingConstants.CENTER);
